@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Localization;
+@using Microsoft.Extensions.Options;
+
+@inject IOptions<RequestLocalizationOptions> LocOptions;
+
+@{
+    var requestUiCulture = Context.Features.Get<IRequestCultureFeature>()!.RequestCulture.UICulture;
+    var cultureItems = LocOptions.Value.SupportedCultures!
+    .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+    .ToList();
+}
+
+<div class="dropdown">
+    <div class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" id="lang-select-btn" aria-expanded="false" aria-haspopup="true">
+        <span id="lang-select-span">@requestUiCulture.DisplayName</span>
+    </div>
+    <ul class="dropdown-menu" id="culture-options">
+        @foreach(var item in cultureItems)
+        {
+           <li> 
+               <div class="dropdown-item btn w-100 @(item.Value == requestUiCulture.Name?"btn-primary":"btn-secondary")"
+                name="culture" value="@item.Value">@item.Text</div>
+           </li>
+        }
+    </ul>
+</div>
+
+<script src="~/js/language-switcher.js"></script>

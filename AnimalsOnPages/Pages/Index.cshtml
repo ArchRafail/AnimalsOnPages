@@ -1,0 +1,24 @@
+﻿@page
+@using System.ComponentModel;
+@using AnimalsOnPages.Resources;
+@model AnimalsOnPages.Pages.IndexModel
+@{
+    ComponentResourceManager myManager = new ComponentResourceManager(typeof(Resource));
+}
+
+<div>
+
+    <h1 class="text-center mb-5">@AnimalsOnPages.Resources.Resource.Animals_Title</h1>
+    <div class="row gap-3 justify-content-center mx-auto">
+        @foreach(var animal in @Model.animals!)
+        {
+            <div class="card col-3">
+                <div class="card-body">
+                    @await Html.PartialAsync("_AnimalPartialView", animal)
+                    <a asp-page="AnimalDetails" asp-route-id="@animal.Id"><input type="button" class="btn btn-primary" value="@AnimalsOnPages.Resources.Resource.DetailsButton"></a>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

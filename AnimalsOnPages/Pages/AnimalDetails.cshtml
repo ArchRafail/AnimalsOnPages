@@ -1,0 +1,29 @@
+﻿@page
+@using System.ComponentModel;
+@using AnimalsOnPages.Resources;
+@model AnimalsOnPages.Pages.AnimalDetailsModel
+@{
+    ComponentResourceManager myManager = new ComponentResourceManager(typeof(Resource));
+}
+
+<div>
+    @if (Model.animal != null)
+    {
+        <h1 class="text-center mb-5">@AnimalsOnPages.Resources.Resource.Details_Title <span>@Model.animal.Id</span></h1>
+        <div class="row justify-content-center mb-3">
+            <div class="card col-3">
+                <div class="card-body">
+                    @await Html.PartialAsync("_AnimalPartialView", Model.animal)
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center gap-1">
+            <div class="col-auto">
+                <a asp-page="Index"><input type="button" class="btn btn-primary" value="@AnimalsOnPages.Resources.Resource.ToAnimalsButton"></a>
+            </div>
+            <div class="col-auto">
+                <a asp-page="FormAnimal" asp-route-id="@Model.animal.Id"><input type="button" class="btn btn-primary" value="@AnimalsOnPages.Resources.Resource.UpdateAnimal"></a>
+            </div>
+        </div>
+    }
+</div>

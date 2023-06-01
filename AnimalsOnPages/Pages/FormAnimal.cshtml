@@ -1,0 +1,224 @@
+﻿@page
+@model AnimalsOnPages.Pages.AddAnimalModel
+@{
+}
+
+<div>
+    <h1 class="mb-5 text-center text-black">@(Model.animal == null ? @AnimalsOnPages.Resources.Resource.AddAnimal_Title : @AnimalsOnPages.Resources.Resource.UpdateAnimal_Title)@(Model.animal != null ? Model.animal.Id : "")</h1>
+
+    <form asp-action="/AddAnimal" class="w-100">
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Input!.Id" class="form-label w-100 text-end me-2">@AnimalsOnPages.Resources.Resource.AnimalsId</label>
+                </div>
+                <div class="col-4">
+                    <input 
+                        asp-for="Input!.Id"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.animal != null ? Model.animal.Id : "0")"
+                        readonly="@(true)"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="AnimalClass" class="form-label w-100 text-end me-2">@AnimalsOnPages.Resources.Resource.AddAnimalClass</label>
+                </div>
+                <div class="col-5 row justify-content-center gap-2">
+                    <div class="col-auto">
+                        <input
+                            asp-for="AnimalClass"
+                            type="radio"
+                            Value="Mammal"
+                            checked="@(Model.animal == null || Model.animal.AnimalClass == "Mammal" || Model.animal.AnimalClass == "Ссавець")"
+                            id="classMammal"
+                        />
+                        <label for="classMammal">@AnimalsOnPages.Resources.Resource.Animals_MammalClass</label>
+                    </div>
+                    <div class="col-auto">
+                        <input
+                            asp-for="AnimalClass"
+                            type="radio"
+                            Value="Reptile"
+                            checked="@(Model.animal != null && ( Model.animal.AnimalClass == "Reptile" || Model.animal.AnimalClass == "Плазун" ))"
+                            id="classReptile"
+                        />
+                        <label for="classReptile">@AnimalsOnPages.Resources.Resource.Animals_ReptileClass</label>
+                    </div>
+                    <div class="col-auto">
+                        <input 
+                            asp-for="AnimalClass"
+                            type="radio"
+                            Value="Amphibia"
+                            checked="@(Model.animal != null && ( Model.animal.AnimalClass == "Amphibia" || Model.animal.AnimalClass == "Земноводна" ))"
+                            id="classAmphibia"
+                        />
+                        <label for="classAmphibia">@AnimalsOnPages.Resources.Resource.Animals_AmphibiaClass</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Input!.Name" class="form-label w-100 text-end me-2">@AnimalsOnPages.Resources.Resource.AddAnimalName</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Input!.Name"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.animal != null ? Model.animal.Name : "")"
+                        aria-labelledby="nameHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="nameHelpInline" class="form-text">@AnimalsOnPages.Resources.Resource.AddAnimalNameHelper.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Input!.Name" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Input!.Sex" class="form-label w-100 text-end me-2">@AnimalsOnPages.Resources.Resource.AddAnimalSex</label>
+                </div>
+                <div class="col-4 row justify-content-center gap-2">
+                    <div class="col-auto">
+                        <input
+                            asp-for="Input!.Sex"
+                            type="radio"
+                            Value="Male"
+                            checked="@(Model.animal == null || Model.animal.Sex == "Male" || Model.animal.Sex == "Чоловіча")"
+                            id="sexMale"
+                        />
+                        <label for="sexMale">@AnimalsOnPages.Resources.Resource.Animals_MaleSex</label>
+                    </div>
+                    <div class="col-auto">
+                        <input
+                            asp-for="Input!.Sex"
+                            type="radio"
+                            Value="Female"
+                            checked="@(Model.animal != null && ( Model.animal.Sex == "Female" || Model.animal.Sex == "Жіноча" ))"
+                            id="sexFemale"
+                        />
+                        <label for="sexFemale">@AnimalsOnPages.Resources.Resource.Animals_FemaleSex</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Input!.Rank" class="form-label w-100 text-end me-2">@AnimalsOnPages.Resources.Resource.AddAnimalRank</label>
+                </div>
+                <div class="col-5 row justify-content-center gap-2">
+                    <div class="col-auto">
+                        <input
+                            asp-for="Input!.Rank"
+                            type="radio"
+                            Value="Carnivorous"
+                            checked="@(Model.animal == null || Model.animal.Rank == "Carnivorous" || Model.animal.Rank == "М'ясоїдна")"
+                            id="rankCarnivorous"
+                        />
+                        <label for="rankCarnivorous">@AnimalsOnPages.Resources.Resource.Animals_CarnivorousRank</label>
+                    </div>
+                    <div class="col-auto">
+                        <input
+                            asp-for="Input!.Rank"
+                            type="radio"
+                            Value="Herbivorous"
+                            checked="@(Model.animal != null && ( Model.animal.Rank == "Herbivorous" || Model.animal.Rank == "Травоїдна" ))"
+                            id="rankHerbivorous"
+                        />
+                        <label for="rankHerbivorous">@AnimalsOnPages.Resources.Resource.Animals_HerbivorousRank</label>
+                    </div>
+                    <div class="col-auto">
+                        <input
+                            asp-for="Input!.Rank"
+                            type="radio"
+                            Value="Hybrids"
+                            checked="@(Model.animal != null && ( Model.animal.Rank == "Hybrids" || Model.animal.Rank == "Гібридна" ))"
+                            id="rankHybrids"
+                        />
+                        <label for="rankHybrids">@AnimalsOnPages.Resources.Resource.Animals_HybridsRank</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Input!.Sound" class="form-label w-100 text-end me-2">@AnimalsOnPages.Resources.Resource.AddAnimalSound</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Input!.Sound"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.animal != null ? Model.animal.Sound : "")"
+                        aria-labelledby="soundHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="soundHelpInline" class="form-text">@AnimalsOnPages.Resources.Resource.AddAnimalSoundHelper.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Input!.Sound" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Input!.CoverColor" class="form-label w-100 text-end me-2">@AnimalsOnPages.Resources.Resource.AddAnimalColor</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Input!.CoverColor"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.animal != null ? Model.animal.CoverColor : "")"
+                        aria-labelledby="colorHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="colorHelpInline" class="form-text">@AnimalsOnPages.Resources.Resource.AddAnimalColorHelper.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Input!.CoverColor" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-2"></div>
+            <div class="col-4 d-flex justify-content-between">
+                <button value="create" name="Button" class="btn btn-primary mb-3" style="width: 50%;">@(Model.animal == null ? @AnimalsOnPages.Resources.Resource.AddAnimalCreateButton : @AnimalsOnPages.Resources.Resource.UpdateAnimalButton)</button>
+                <button value="cancel" name="Button" class="btn btn-primary mb-3" style="width: 40%;">@AnimalsOnPages.Resources.Resource.AddAnimalCancelButton</button>
+            </div>
+        </div>
+    </form>
+</div>

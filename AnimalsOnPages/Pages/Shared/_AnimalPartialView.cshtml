@@ -1,0 +1,29 @@
+﻿@using System.ComponentModel;
+@using AnimalsOnPages.Resources;
+@model AnimalsOnPages.Models.Animal
+@{
+    ComponentResourceManager myManager = new ComponentResourceManager(typeof(Resource));
+}
+
+@if (Model != null)
+{
+    var animalName = myManager.GetString("NameId" + Model!.Id);
+    animalName = animalName == null ? Model.Name : animalName;
+
+    var animalSound = myManager.GetString("SoundId" + Model.Id);
+    animalSound = animalSound == null ? Model.Sound : animalSound;
+
+    var animalColor = @myManager.GetString("ColorId" + Model.Id);
+    animalColor = animalColor == null ? Model.CoverColor : animalColor;
+
+    <h3 class="card-title text-center">@animalName</h3>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsId: <strong>@Model.Id</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsSex: <strong>@Model.Sex</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsRank: <strong>@Model.Rank</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsSound: <strong>@animalSound</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsClass: <strong>@Model.AnimalClass</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsBirth: <strong>@Model.Birth</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsTemperature: <strong>@Model.BodyTemperature</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsCovering: <strong>@Model.BodyCovering</strong></p>
+    <p>@AnimalsOnPages.Resources.Resource.AnimalsColor: <strong>@animalColor</strong></p>
+}
