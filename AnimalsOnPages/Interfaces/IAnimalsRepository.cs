@@ -13,5 +13,6 @@ namespace AnimalsOnPages.Interfaces
 
         void Update(Animal animal);
 
+        void Delete(int id);
     }
 }

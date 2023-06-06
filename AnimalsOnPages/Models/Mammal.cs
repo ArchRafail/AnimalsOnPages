@@ -58,12 +58,12 @@ namespace AnimalsOnPages.Models
         [Required]
         public override string Sound { get; set; }
 
-        public override string CoverColor { get; set; }
+        public override string? CoverColor { get; set; }
 
-        private string animalClass = "Mammal";
-        private string birth = "Live birth";
-        private string bodyTemperature = "Hematothermal";
-        private string bodyCovering = "Hair";
+        private readonly string animalClass = "Mammal";
+        private readonly string birth = "Live birth";
+        private readonly string bodyTemperature = "Hematothermal";
+        private readonly string bodyCovering = "Hair";
         private Sex sex;
         private Rank rank;
 

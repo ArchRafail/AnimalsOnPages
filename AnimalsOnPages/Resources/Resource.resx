@@ -130,7 +130,7 @@
     <value>Animal Color</value>
   </data>
   <data name="AddAnimalColorHelper" xml:space="preserve">
-    <value>Color must be 3-20 characters long</value>
+    <value>If specified, must be 3-20 characters long</value>
   </data>
   <data name="AddAnimalCreateButton" xml:space="preserve">
     <value>Create</value>
@@ -233,6 +233,9 @@
   </data>
   <data name="ColorId5" xml:space="preserve">
     <value>Green</value>
+  </data>
+  <data name="DeleteButton" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="Details.Title" xml:space="preserve">
     <value>Animal Id</value>

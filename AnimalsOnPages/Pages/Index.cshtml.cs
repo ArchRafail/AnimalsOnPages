@@ -1,12 +1,13 @@
 using AnimalsOnPages.Interfaces;
-using AnimalsOnPages.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AnimalsOnPages.Pages
 {
     public class IndexModel : PageModel
     {
-        public List<Animal>? animals;
+        [BindProperty]
+        public ViewAnimals? View { get; set; }
         private readonly IAnimalsService animalsService;
 
         public IndexModel(IAnimalsService animalsService)
@@ -16,8 +17,20 @@ namespace AnimalsOnPages.Pages
 
         public void OnGet()
         {
-            animals = animalsService.GetAll();
+            View = new ViewAnimals();
+            View.Animals = animalsService.GetAll();
         }
 
+        public IActionResult OnPost()
+        {
+            if (View == null)
+            {
+                return BadRequest();
+            }
+            var id = int.Parse(View.ButtonPressed!);
+            animalsService.Delete(id);
+            View.Animals = animalsService.GetAll();
+            return Page();
+        }
     }
 }

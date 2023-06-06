@@ -52,11 +52,11 @@ namespace AnimalsOnPages.Pages
                 {
                     return Page();
                 }
-                if (string.IsNullOrEmpty(Input.Sound) || Input.Sound.Split( new char[] { ',', '-' }, StringSplitOptions.RemoveEmptyEntries).Length is not 3)
+                if (string.IsNullOrEmpty(Input.Sound) || Input.Sound.Split(new char[] { ',', '-' }, StringSplitOptions.RemoveEmptyEntries).Length is not 3)
                 {
                     return Page();
                 }
-                if (string.IsNullOrEmpty(Input.CoverColor) || Input.CoverColor.Length < 3 || Input.CoverColor.Length > 20)
+                if (!string.IsNullOrEmpty(Input.CoverColor) && (Input.CoverColor.Length < 3 || Input.CoverColor.Length > 20))
                 {
                     return Page();
                 }

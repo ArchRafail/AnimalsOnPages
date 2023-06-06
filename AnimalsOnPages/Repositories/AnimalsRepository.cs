@@ -81,5 +81,11 @@ namespace AnimalsOnPages.Repositories
             _animals.Remove(animalToUpdate);
             _animals.Insert(animal.Id-1, animal);
         }
+
+        public void Delete(int id)
+        {
+            var animalToDelete = Get(id);
+            _animals.Remove(animalToDelete);
+        }
     }
 }

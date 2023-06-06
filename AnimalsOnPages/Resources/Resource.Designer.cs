@@ -97,7 +97,7 @@ namespace AnimalsOnPages.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color must be 3-20 characters long.
+        ///   Looks up a localized string similar to If specified, must be 3-20 characters long.
         /// </summary>
         public static string AddAnimalColorHelper {
             get {
@@ -408,6 +408,15 @@ namespace AnimalsOnPages.Resources {
         public static string ColorId5 {
             get {
                 return ResourceManager.GetString("ColorId5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteButton {
+            get {
+                return ResourceManager.GetString("DeleteButton", resourceCulture);
             }
         }
         

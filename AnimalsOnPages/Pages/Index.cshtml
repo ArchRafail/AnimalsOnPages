@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{handler?}"
 @using System.ComponentModel;
 @using AnimalsOnPages.Resources;
 @model AnimalsOnPages.Pages.IndexModel
@@ -9,16 +9,28 @@
 <div>
 
     <h1 class="text-center mb-5">@AnimalsOnPages.Resources.Resource.Animals_Title</h1>
-    <div class="row gap-3 justify-content-center mx-auto">
-        @foreach(var animal in @Model.animals!)
-        {
-            <div class="card col-3">
-                <div class="card-body">
-                    @await Html.PartialAsync("_AnimalPartialView", animal)
-                    <a asp-page="AnimalDetails" asp-route-id="@animal.Id"><input type="button" class="btn btn-primary" value="@AnimalsOnPages.Resources.Resource.DetailsButton"></a>
-                </div>
+    @if (@Model.View != null && @Model.View.Animals != null)
+    {
+        <form method="post" asp-page="/Index">
+            <div class="row gap-3 justify-content-center mx-auto">
+                @foreach (var animal in @Model.View.Animals!)
+                {
+                    <div class="card col-3">
+                        <div class="card-body">
+                            @await Html.PartialAsync("_AnimalPartialView", animal)
+                            <div class="row justify-content-center gap-2">
+                                <div class="col-auto">
+                                    <a asp-page="AnimalDetails" asp-route-id="@animal.Id"><input type="button" class="btn btn-primary" value="@AnimalsOnPages.Resources.Resource.DetailsButton"></a>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-primary" name="View.ButtonPressed" value="@animal.Id">@AnimalsOnPages.Resources.Resource.DeleteButton</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
-        }
-    </div>
+        </form>
+    }
 
 </div>

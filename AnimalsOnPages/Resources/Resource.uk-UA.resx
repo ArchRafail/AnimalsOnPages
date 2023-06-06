@@ -273,9 +273,6 @@
   <data name="AddAnimalColor" xml:space="preserve">
     <value>Колір тварини</value>
   </data>
-  <data name="AddAnimalColorHelper" xml:space="preserve">
-    <value>Назва кольору повинна бути від 3-х до 20-ти символів завдовжки</value>
-  </data>
   <data name="AddAnimalCreateButton" xml:space="preserve">
     <value>Створити</value>
   </data>
@@ -305,5 +302,11 @@
   </data>
   <data name="UpdateAnimal" xml:space="preserve">
     <value>Оновити тварину</value>
+  </data>
+  <data name="AddAnimalColorHelper" xml:space="preserve">
+    <value>Якщо зазначено, повинен бути довжиною від 3-х до 20-ти символів</value>
+  </data>
+  <data name="DeleteButton" xml:space="preserve">
+    <value>Вилучити</value>
   </data>
 </root>
