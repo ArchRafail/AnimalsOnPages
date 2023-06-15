@@ -1,0 +1,29 @@
+﻿@page
+@using System.ComponentModel;
+@model AnimalsOnPages.Pages.AddressDetailsModel
+@{
+    
+}
+
+<div>
+    @if (Model.address != null)
+    {
+        <h1 class="text-center mb-5">Address Id <span>@Model.address.Id</span></h1>
+        <div class="row justify-content-center mb-3">
+            <div class="card col-3">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Address @Model.address.Id</h3>
+                    @await Html.PartialAsync("_AddressPartialView", Model.address)
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center gap-1">
+            <div class="col-auto">
+                <a asp-page="/Addresses/Addresses"><input type="button" class="btn btn-primary" value="Back to Addresses"></a>
+            </div>
+            <div class="col-auto">
+                <a asp-page="FormAddress" asp-route-id="@Model.address.Id"><input type="button" class="btn btn-primary" value="Update Address"></a>
+            </div>
+        </div>
+    }
+</div>

@@ -25,5 +25,33 @@
                 <a asp-page="FormAnimal" asp-route-id="@Model.animal.Id"><input type="button" class="btn btn-primary" value="@AnimalsOnPages.Resources.Resource.UpdateAnimal"></a>
             </div>
         </div>
+        @if (Model.animal.Zoos != null && Model.animal.Zoos.Count != 0)
+        {
+            <h4 class="text-center mt-4 mb-3">Zoos where you can see this animal:</h4>
+            <div class="row justify-content-center gap-4">
+                @foreach (var zoo in @Model.animal.Zoos)
+                {
+                    <div class="card col-3">
+                        <div class="card-body">
+                            @await Html.PartialAsync("_ZooPartialView", zoo)
+                            <h5 class="mt-4 mb-3">Zoo address:</h5>
+                            @if (zoo.Address != null)
+                            {
+                                @await Html.PartialAsync("_AddressPartialView", zoo.Address)
+                            }
+                            <div class="row justify-content-center gap-2">
+                                <div class="col-auto">
+                                    <a asp-page="ZooDetails" asp-route-id="@zoo.Id"><input type="button" class="btn btn-primary" value="More info"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <h4 class="text-center">There is no zoo where you can see this animal.</h4>
+        }
     }
 </div>

@@ -1,0 +1,12 @@
+﻿@using System.ComponentModel;
+@model AnimalsOnPages.Models.Zoo
+@{
+    
+}
+
+@if (Model != null)
+{
+    <h3 class="card-title text-center" style="min-height: 68px;">@Model.Name</h3>
+    <p>Id: <strong>@Model.Id</strong></p>
+    <p style="min-height: 48px;">Name: <strong>@Model.Name</strong></p>
+}

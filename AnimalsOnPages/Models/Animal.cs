@@ -1,5 +1,6 @@
 ﻿using AnimalsOnPages.Resources;
 using AnimalsOnPages.Utilities;
+using System.ComponentModel.DataAnnotations;
 
 namespace AnimalsOnPages.Models
 {
@@ -34,6 +35,7 @@ namespace AnimalsOnPages.Models
 
     public abstract class Animal
     {
+        [Key]
         public abstract int Id { get; set; }
         public abstract string Name { get; set; }
         public abstract string Sex { get; set; }
@@ -43,7 +45,7 @@ namespace AnimalsOnPages.Models
         public abstract string Birth { get; }
         public abstract string BodyTemperature { get; }
         public abstract string BodyCovering { get; }
-        public abstract string CoverColor { get; set; }
-
+        public abstract string? CoverColor { get; set; }
+        public abstract ICollection<Zoo>? Zoos { get; set; }
     }
 }

@@ -1,0 +1,14 @@
+﻿@using System.ComponentModel;
+@model AnimalsOnPages.Models.Address
+@{
+    
+}
+
+@if (Model != null)
+{
+    <p>Postal Code: <strong>@Model.PostalCode</strong></p>
+    <p>Country: <strong>@Model.Country</strong></p>
+    <p>City: <strong>@Model.City</strong></p>
+    <p>Street: <strong>@Model.Street</strong></p>
+    <p>Building: <strong>@Model.Building</strong></p>
+}

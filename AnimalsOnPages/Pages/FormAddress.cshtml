@@ -1,0 +1,165 @@
+﻿@page
+@model FormAddressModel
+@{
+}
+
+<div>
+    <h1 class="mb-5 text-center text-black">@(Model.Address == null ? "Add Address" : "Update Address Id")@(Model.Address != null ? Model.Address.Id : "")</h1>
+
+    <form asp-action="/AddAddress" class="w-100">
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Address!.Id" class="form-label w-100 text-end me-2">Address Id</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Address!.Id"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.Address != null ? Model.Address.Id : "0")"
+                        readonly="@(true)"
+                    />
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Address!.PostalCode" class="form-label w-100 text-end me-2">Postal Code</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Address!.PostalCode"
+                        type="number"
+                        class="form-control"
+                        Value="@(Model.Address != null && Model.Address.PostalCode != null ? Model.Address.PostalCode : "")"
+                        aria-labelledby="postalcodeHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="postalcodeHelpInline" class="form-text">If specified, has to be 3-6 digits length.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Address!.PostalCode" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Address!.Country" class="form-label w-100 text-end me-2">Country</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Address!.Country"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.Address != null ? Model.Address.Country : "")"
+                        aria-labelledby="countryHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="countryHelpInline" class="form-text">Has to be 3-20 characters length.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Address!.Country" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Address!.City" class="form-label w-100 text-end me-2">City</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Address!.City"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.Address != null ? Model.Address.City : "")"
+                        aria-labelledby="cityHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="cityHelpInline" class="form-text">Has to be 3-20 characters length.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Address!.City" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Address!.Street" class="form-label w-100 text-end me-2">Street</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Address!.Street"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.Address != null ? Model.Address.Street : "")"
+                        aria-labelledby="streetHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="streetHelpInline" class="form-text">Has to be 3-20 characters length.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Address!.Street" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Address!.Building" class="form-label w-100 text-end me-2">Building</label>
+                </div>
+                <div class="col-4">
+                    <input
+                        asp-for="Address!.Building"
+                        type="number"
+                        class="form-control"
+                        Value="@(Model.Address != null ? Model.Address.Building : "")"
+                        aria-labelledby="buildingHelpInline" />
+                </div>
+                <div class="col-auto">
+                    <span id="buildingHelpInline" class="form-text">Has to be between 1 and 10000 number.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Address!.Building" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-2"></div>
+            <div class="col-4 d-flex justify-content-between">
+                <button value="create" name="Button" class="btn btn-primary mb-3" style="width: 50%;">@(Model.Address == null ? "Create" : "Update")</button>
+                <button value="cancel" name="Button" class="btn btn-primary mb-3" style="width: 40%;">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

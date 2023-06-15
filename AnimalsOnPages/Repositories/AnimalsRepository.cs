@@ -1,91 +1,86 @@
 ﻿using AnimalsOnPages.Interfaces;
 using AnimalsOnPages.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AnimalsOnPages.Repositories
 {
     public class AnimalsRepository : IAnimalsRepository
     {
-        private List<Animal> _animals;
+        private AnimalsDdContext _context;
 
-        public AnimalsRepository()
+        public AnimalsRepository(AnimalsDdContext context)
         {
-            _animals = new List<Animal>()
-            {
-                new Mammal()
-                {
-                    Id = 1,
-                    Name = "Wolf",
-                    Sex = "Male",
-                    Rank = "Carnivorous",
-                    CoverColor = "Grey",
-                    Sound = "Owoo-oo-oo"
-                },
-                new Mammal()
-                {
-                    Id = 2,
-                    Name = "Bear",
-                    Sex = "Female",
-                    Rank = "Carnivorous",
-                    CoverColor = "BrownBrown",
-                    Sound = "Ur-r-r"
-                },
-                new Reptile()
-                {
-                    Id = 3,
-                    Name = "Crocodile",
-                    Sex = "Male",
-                    Rank = "Carnivorous",
-                    CoverColor = "LightGrey",
-                    Sound = "Grunt, grunt, grunt"
-                },
-                new Reptile()
-                {
-                    Id = 4,
-                    Name = "Turtle",
-                    Sex = "Female",
-                    Rank = "Herbivorous",
-                    CoverColor = "LightGrey",
-                    Sound = "Creek, creek, creek"
-                },
-                new Amphibia()
-                {
-                    Id = 5,
-                    Name = "Frog",
-                    Sex = "Female",
-                    Rank = "Herbivorous",
-                    CoverColor = "Green",
-                    Sound = "Kwa, kwa, kwa"
-                }
-            };
-
+            _context = context;
         }
 
         public List<Animal> GetAll()
         {
-            return _animals;
-        }
+            var addresses = _context.Addresses.ToList();
+			var ret = _context.Animals.Include(a => a.Zoos).ToList();
+
+            foreach (var animal in ret) {
+                foreach (var zoo in animal.Zoos!) {
+					zoo.Address = addresses.FirstOrDefault(x=>x.Id == zoo.AddressId)!;
+				}
+            }
+            return ret;
+
+		}
 
         public Animal Get(int id)
         {
-            return _animals.Single(x=>x.Id == id);
+            var addresses = _context.Addresses.ToList();
+            var ret = _context.Animals.Include(a => a.Zoos).Single(x => x.Id == id);
+            foreach (var zoo in ret.Zoos!)
+            {
+                zoo.Address = addresses.FirstOrDefault(x => x.Id == zoo.AddressId)!;
+            }
+            return ret;
         }
 
         public void Add(Animal animal)
         {
-            _animals.Add(animal);
+            var zoos = animal.Zoos;
+            animal.Zoos = null;
+            _context.Animals.Add(animal);
+            _context.SaveChanges();
+
+            animal = _context.Animals.First(x => x.Name == animal.Name);
+            _context.ZoosAnimals.AddRange(zoos.Select(
+                x => new ZooAnimal()
+                {
+                    ZooId = x.Id,
+                    AnimalId = animal.Id
+                }));
+            _context.SaveChanges();
         }
 
         public void Update(Animal animal)
         {
-            var animalToUpdate = Get(animal.Id);
-            _animals.Remove(animalToUpdate);
-            _animals.Insert(animal.Id-1, animal);
+            var zoos = animal.Zoos;
+            var oldAnimal = Get(animal.Id);
+            animal.Zoos = null;
+            oldAnimal.Zoos = null;
+            if (oldAnimal != animal)
+            {
+                _context.Animals.Update(animal);
+                _context.SaveChanges();
+            }
+            _context.ZoosAnimals.UpdateRange(zoos.Select(
+                x => new ZooAnimal()
+                {
+                    ZooId = x.Id,
+                    AnimalId = animal.Id
+                }
+                ));
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var animalToDelete = Get(id);
-            _animals.Remove(animalToDelete);
+            _context.Animals.Remove(animalToDelete);
+            _context.SaveChanges();
         }
     }
 }

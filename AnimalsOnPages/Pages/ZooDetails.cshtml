@@ -1,0 +1,56 @@
+﻿@page
+@using System.ComponentModel;
+@model AnimalsOnPages.Pages.ZooDetailsModel
+@{
+    
+}
+
+<div>
+    @if (Model.zoo != null)
+    {
+        <h1 class="text-center mb-5">Zoo Id <span>@Model.zoo.Id</span></h1>
+        <div class="row justify-content-center mb-3">
+            <div class="card col-5">
+                <div class="card-body">
+                    @await Html.PartialAsync("_ZooPartialView", Model.zoo)
+                    <h5 class="mt-4 mb-3">Zoo address:</h5>
+                    @if (Model.zoo.Address != null)
+                    {
+                        @await Html.PartialAsync("_AddressPartialView", Model.zoo.Address)
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center gap-1">
+            <div class="col-auto">
+                <a asp-page="/Zoos/Zoos"><input type="button" class="btn btn-primary" value="Back to Zoos"></a>
+            </div>
+            <div class="col-auto">
+                <a asp-page="FormZoo" asp-route-id="@Model.zoo.Id"><input type="button" class="btn btn-primary" value="Update Zoo"></a>
+            </div>
+        </div>
+        @if (Model.zoo.Animals != null && Model.zoo.Animals.Count != 0)
+        {
+            <h4 class="text-center mt-4 mb-3">Animals that can be seen here:</h4>
+            <div class="row justify-content-center gap-4">
+                @foreach (var animal in @Model.zoo.Animals)
+                {
+                    <div class="card col-3">
+                        <div class="card-body">
+                            @await Html.PartialAsync("_AnimalPartialView", animal)
+                            <div class="row justify-content-center gap-2">
+                                <div class="col-auto">
+                                    <a asp-page="AnimalDetails" asp-route-id="@animal.Id"><input type="button" class="btn btn-primary" value="@AnimalsOnPages.Resources.Resource.DetailsButton"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <h4 class="text-center">No any animal lives here.</h4>
+        }
+    }
+</div>

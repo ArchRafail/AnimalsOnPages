@@ -6,21 +6,21 @@ namespace AnimalsOnPages.Services
 {
     public class AnimalsService : IAnimalsService
     {
-        private readonly IAnimalsRepository _repository;
+        private readonly IAnimalsRepository animalsRepository;
 
-        public AnimalsService(IAnimalsRepository animalRepository)
+        public AnimalsService(IAnimalsRepository animalsRepository)
         {
-            _repository = animalRepository;
+            this.animalsRepository = animalsRepository;
         }
 
         public List<Animal> GetAll()
         {
-            return _repository.GetAll();
+            return animalsRepository.GetAll();
         }
 
         public Animal? Get(int? id)
         {
-            var allAnimals = _repository.GetAll();
+            var allAnimals = animalsRepository.GetAll();
             bool noSuchAnimal = true;
             if (id == null) { return null; }
             foreach (var animalFromList in allAnimals)
@@ -32,7 +32,7 @@ namespace AnimalsOnPages.Services
                 }
             }
             if (noSuchAnimal) { return null; }
-            return _repository.Get((int)id);
+            return animalsRepository.Get((int)id);
         }
 
         public void Add(string classOfAnimal, AnimalDto animalDto)
@@ -46,16 +46,21 @@ namespace AnimalsOnPages.Services
             {
                 return;
             }
-            var allAnimals = _repository.GetAll();
+            var allAnimals = animalsRepository.GetAll();
+            if (allAnimals.Count == 0)
+            {
+                animalsRepository.Add(animal);
+                return;
+            }
             if (!allAnimals.Any(x => StringComparer.CurrentCultureIgnoreCase.Compare(x.Name, animal.Name) == 0))
             {
-                _repository.Add(animal);
+                animalsRepository.Add(animal);
             }
         }
 
         public void Update(string classOfAnimal, AnimalDto animalDto)
         {
-            var allAnimals = _repository.GetAll();
+            var allAnimals = animalsRepository.GetAll();
             bool noSuchAnimal = true;
             if (animalDto.Id == null) { return; }
             foreach (var animalFromList in allAnimals)
@@ -97,17 +102,17 @@ namespace AnimalsOnPages.Services
             }
             if (!allAnimals.Any(x => StringComparer.CurrentCultureIgnoreCase.Compare(x.Name, animal.Name) == 0))
             {
-                _repository.Update(animal);
+                animalsRepository.Update(animal);
             }
             if (allAnimals.Any(x => StringComparer.CurrentCulture.Compare(x.Name, animal.Name) == 0 && x.Id == animal.Id))
             {
-                _repository.Update(animal);
+                animalsRepository.Update(animal);
             }
         }
 
         public void Delete(int? id)
         {
-            var allAnimals = _repository.GetAll();
+            var allAnimals = animalsRepository.GetAll();
             bool noSuchAnimal = true;
             if (id == null) { return; }
             foreach (var animalFromList in allAnimals)
@@ -119,7 +124,7 @@ namespace AnimalsOnPages.Services
                 }
             }
             if (noSuchAnimal) { return; }
-           _repository.Delete((int)id);
+            animalsRepository.Delete((int)id);
         }
 
         private Animal? CreateAnimalAccordingClass(string classOfAnimal, AnimalDto animalDto)

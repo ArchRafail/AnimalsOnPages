@@ -2,9 +2,9 @@
 
 namespace AnimalsOnPages.Pages
 {
-    public class ViewAnimals
+    public class ViewZoos
     {
-        public List<Animal>? Animals { get; set; }
+        public List<Zoo>? Zoos { get; set; }
         public string? ButtonPressed { get; set; }
     }
 }

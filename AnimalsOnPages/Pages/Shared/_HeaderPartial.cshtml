@@ -21,6 +21,18 @@
                     <li class="nav-item">
                         <a class="nav-link @((path.EndsWith("/FormAnimal") && String.IsNullOrEmpty(query)) ? "active text-white" : "text-dark")" asp-area="" asp-page="/FormAnimal">@AnimalsOnPages.Resources.Resource.NavbarAddAnimal</a>
                     </li>
+		    <li class="nav-item">
+                        <a class="nav-link @(path.EndsWith("/Zoos") ? "active text-white" : "text-dark")" asp-area="" asp-page="/Zoos/Zoos">Zoos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @((path.EndsWith("/FormZoos") && String.IsNullOrEmpty(query)) ? "active text-white" : "text-dark")" asp-area="" asp-page="/FormZoo">Add Zoo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(path.EndsWith("/Addresses") ? "active text-white" : "text-dark")" asp-area="" asp-page="/Addresses/Addresses">Addresses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @((path.EndsWith("/FormAddress") && String.IsNullOrEmpty(query)) ? "active text-white" : "text-dark")" asp-area="" asp-page="/FormAddress">Add Address</a>
+                    </li>
                 </ul>
             </div>
             <div><partial name="_LanguageSwitcherPartial" /></div>

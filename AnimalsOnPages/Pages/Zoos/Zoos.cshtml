@@ -1,0 +1,35 @@
+﻿@page "{handler?}"
+@model ZoosModel
+@{
+}
+
+<div>
+
+    <h1 class="text-center mb-5">Zoos</h1>
+    @if (@Model.View != null && @Model.View.Zoos != null)
+    {
+        <form method="post" asp-page="/Zoos/Zoos">
+            <div class="row gap-3 justify-content-center mx-auto">
+                @foreach (var zoo in @Model.View.Zoos!)
+                {
+                    <div class="card col-3">
+                        <div class="card-body">
+                            @await Html.PartialAsync("_ZooPartialView", zoo)
+                            <h5 class="mt-4 mb-3">Zoo address:</h5>
+                            @await Html.PartialAsync("_AddressPartialView", zoo.Address)
+                            <div class="row justify-content-center gap-2">
+                                <div class="col-auto">
+                                    <a asp-page="/ZooDetails" asp-route-id="@zoo.Id"><input type="button" class="btn btn-primary" value="More info"></a>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-primary" name="View.ButtonPressed" value="@zoo.Id">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </form>
+    }
+
+</div>

@@ -1,0 +1,159 @@
+﻿@page
+@using AnimalsOnPages.Models;
+@model FormZooModel
+@{
+    
+}
+
+<div>
+    <h1 class="mb-5 text-center text-black">@(Model.Zoo == null ? "Add Zoo" : "Update Zoo Id")@(Model.Zoo != null ? Model.Zoo.Id : "")</h1>
+
+    <form asp-action="/AddZoo" class="w-100">
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Zoo!.Id" class="form-label w-100 text-end me-2">Zoo Id</label>
+                </div>
+                <div class="col-5">
+                    <input
+                        asp-for="Zoo!.Id"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.Zoo != null ? Model.Zoo.Id : "0")"
+                        readonly="@(true)"
+                    />
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Zoo!.Name" class="form-label w-100 text-end me-2">Name</label>
+                </div>
+                <div class="col-5">
+                    <input
+                        asp-for="Zoo!.Name"
+                        type="text"
+                        class="form-control"
+                        Value="@(Model.Zoo != null ? Model.Zoo.Name : "")"
+                        aria-labelledby="nameHelpInline"
+                    />
+                </div>
+                <div class="col-auto">
+                    <span id="nameHelpInline" class="form-text">Has to be 3-40 characters length.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Zoo!.Name" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Zoo!.AddressId" class="form-label w-100 text-end me-2">Address</label>
+                </div>
+                <div class="col-5">
+                    @if (Model.Addresses != null)
+                    {
+                        <select
+                            asp-for="Zoo!.AddressId"
+                            class="form-control form-select"
+                            aria-labelledby="addressHelpInline"
+                        >
+                            @foreach (var address in Model.Addresses)
+                            {
+                                <option
+                                    value="@address.Id"
+                                    selected="@((Model.Zoo != null && Model.Zoo.Address.Id == address.Id) || (Model.Zoo == null && address.Id == 1))"
+                                >
+                                    @address.PostalCode @address.Country, @address.City, @address.Street @address.Building
+                                </option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <div>No any address is available! Please, input address at the page "Add Address".</div>
+                    }
+                </div>
+                <div class="col-auto">
+                    <span id="addressHelpInline" class="form-text">Pick up one address from list.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Zoo!.Address" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label asp-for="Zoo!.Animals" class="form-label w-100 text-end me-2">Animals</label>
+                </div>
+                <div class="col-5">
+                    @if (Model.Animals != null)
+                    {
+                        <select 
+                            asp-for="PickedAnimalsId"
+                            class="form-control form-select"
+                            multiple
+                            size="5"
+                            aria-labelledby="animalsHelpInline"
+                        >
+                            @foreach (var animal in Model.Animals)
+                            {
+                                Animal? pickAnimal = null;
+                                try
+                                {
+                                    if (Model.Zoo != null && Model.Zoo.Animals != null)
+                                    {
+                                        pickAnimal = Model.Zoo.Animals.First(x => x.Id == animal.Id);
+                                    }
+                                }
+                                catch
+                                {
+                                    pickAnimal = null;
+                                }
+                                <option
+                                    value="@animal.Id"
+                                    selected="@(pickAnimal != null)">
+                                    @animal.Name, @animal.Sex, @animal.Rank, @animal.AnimalClass, @animal.Sound
+                                </option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <div>No any animals is available! Please, input animal at the page "Add Animal".</div>
+                    }
+                </div>
+                <div class="col-auto">
+                    <span id="animalsHelpInline" class="form-text">Pick up animal or animals (with Ctrl pressed) from list.</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-1">
+                <div class="col-2"></div>
+                <div class="validation-error col-auto">
+                    <span asp-validation-for="Zoo!.Animals" class="alert-danger fs-6 fst-italic" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-2"></div>
+            <div class="col-5 d-flex justify-content-between">
+                <button value="create" name="Button" class="btn btn-primary mb-3" style="width: 50%;">@(Model.Zoo == null ? "Create" : "Update")</button>
+                <button value="cancel" name="Button" class="btn btn-primary mb-3" style="width: 40%;">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

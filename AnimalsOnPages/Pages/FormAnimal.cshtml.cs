@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AnimalsOnPages.Pages
 {
-    public class AddAnimalModel : PageModel
+    public class FormAnimalModel : PageModel
     {
-        private readonly IAnimalsService _animalsService;
+        private readonly IAnimalsService animalsService;
+        private readonly IZoosService zoosService;
 
-        public Animal? animal { get; set; }
+        public Animal? Animal { get; set; }
+        public List<Zoo>? Zoos { get; set; }
 
         [BindProperty]
         public AnimalDto? Input { get; set; }
@@ -19,11 +21,15 @@ namespace AnimalsOnPages.Pages
         public string? AnimalClass { get; set; }
 
         [BindProperty]
+        public List<int>? PickedZoosId { get; set; }
+
+        [BindProperty]
         public string? Button { get; set; }
 
-        public AddAnimalModel(IAnimalsService animalsService)
+        public FormAnimalModel(IAnimalsService animalsService, IZoosService zoosService)
         {
-            _animalsService = animalsService;
+            this.animalsService = animalsService;
+            this.zoosService = zoosService;
         }
 
         public void OnGet()
@@ -31,12 +37,13 @@ namespace AnimalsOnPages.Pages
             var id = GetId();
             if (id != -1)
             {
-                animal = _animalsService.Get(id!);
+                Animal = animalsService.Get(id!);
             }
             else
             {
-                animal = null;
+                Animal = null;
             }
+            Zoos = zoosService.GetAll();
         }
 
         public IActionResult OnPost()
@@ -61,13 +68,27 @@ namespace AnimalsOnPages.Pages
                     return Page();
                 }
 
+                if (PickedZoosId != null && PickedZoosId.Count != 0)
+                {
+                    Animal.Zoos = new List<Zoo>();
+                    List<Zoo> zoos = zoosService.GetAll();
+                    foreach (var zooId in PickedZoosId)
+                    {
+                        Zoo? zoo = zoos.Where(a => a.Id == zooId).FirstOrDefault();
+                        if (zoo != null)
+                        {
+                            Animal.Zoos.Add(zoo);
+                        }
+                    }
+                }
+
                 if (Input.Id == 0)
                 {
-                    _animalsService.Add(AnimalClass!, Input);
+                    animalsService.Add(AnimalClass!, Input);
                 }
                 else
                 {
-                    _animalsService.Update(AnimalClass!, Input);
+                    animalsService.Update(AnimalClass!, Input);
                 }
             }
 

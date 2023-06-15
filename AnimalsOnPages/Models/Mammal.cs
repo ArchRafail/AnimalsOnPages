@@ -71,5 +71,7 @@ namespace AnimalsOnPages.Models
         public override string Birth { get { return Resources.Resource.Mammal_Birth; } }
         public override string BodyTemperature { get { return Resources.Resource.Mammal_Temperature; } }
         public override string BodyCovering { get { return Resources.Resource.Mammal_Covering; } }
+
+        public override ICollection<Zoo>? Zoos { get; set; }
     }
 }

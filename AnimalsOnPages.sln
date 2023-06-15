@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimalsOnPages", "AnimalsOnPages\AnimalsOnPages.csproj", "{270DF826-0BD0-4D24-A98A-78300F47BDA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalsTestProject", "AnimalsTestProject\AnimalsTestProject.csproj", "{DC6ACD0E-B665-4EF8-9550-764A3F3326AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimalsTestProject", "AnimalsTestProject\AnimalsTestProject.csproj", "{DC6ACD0E-B665-4EF8-9550-764A3F3326AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

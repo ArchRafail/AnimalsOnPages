@@ -3,12 +3,17 @@ using AnimalsOnPages.Repositories;
 using AnimalsOnPages.Resources;
 using AnimalsOnPages.Services;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IAnimalsService, AnimalsService>();
-builder.Services.AddSingleton<IAnimalsRepository, AnimalsRepository>();
+builder.Services.AddScoped<IAnimalsRepository, AnimalsRepository>();
+builder.Services.AddScoped<IZoosService, ZoosService>();
+builder.Services.AddScoped<IZoosRepository, ZoosRepository>();
+builder.Services.AddScoped<IAddressesService, AddressesService>();
+builder.Services.AddScoped<IAddressesRepository, AddressesRepository>();
 
 builder.Services.AddRazorPages()
     .AddDataAnnotationsLocalization(options =>
@@ -28,7 +33,13 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedUICultures = supportedCultures;
 });
 
+var databaseConnectionString = builder.Configuration.GetConnectionString("Default");
+builder.Services.AddDbContext<AnimalsDdContext>(opts =>
+opts.UseSqlServer(databaseConnectionString));
+
 var app = builder.Build();
+
+await DataBaseInitializer.InitializeDatabaseAsync(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
