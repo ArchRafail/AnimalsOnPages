@@ -1,5 +1,5 @@
 # AnimalsOnPages
-ASP.Net project on RazorPages with CRUD service. RAM Repository. 2 language localization. MStest of Service.
+ASP.Net WebApp project on RazorPages with CRUD service. Entity Framework. 2 languages localization. MStest of Service.
 </br>
 </br>
 <h3>Idea</h3>
